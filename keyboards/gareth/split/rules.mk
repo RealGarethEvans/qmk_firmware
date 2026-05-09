@@ -1,0 +1,7 @@
+
+CUSTOM_MATRIX = lite
+ANALOG_DRIVER_REQUIRED = yes
+SRC += hallscan/hallscan.c
+
+CONSOLE_ENABLE = yes
+KEYBOARD_STRING_ENABLE = yes
