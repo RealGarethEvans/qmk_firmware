@@ -1,3 +1,10 @@
+// #define ENCODER_A_PINS { GP17, GP19 }
+// #define ENCODER_B_PINS { GP18, GP20 }
+
+// #define ENCODER_A_PINS { GP20, GP18 }
+// #define ENCODER_B_PINS { GP19, GP17 }
+
+// #define HALLSCAN_LED_PIN GP13
 
 #define MATRIX_COLS  5
 #define MATRIX_ROWS  4

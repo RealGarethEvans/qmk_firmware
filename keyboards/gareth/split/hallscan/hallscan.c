@@ -48,6 +48,10 @@ static const char *sensor_names[SENSOR_COUNT] = {
 uint16_t sensor_baseline[SENSOR_COUNT];
 uint16_t sensor_thresholds[SENSOR_COUNT];
 
+pin_t adc_pins[MUX_COUNT] = {MUX1_ADC_PIN, MUX2_ADC_PIN};
+const mux16_ref_t* mux_tables[MUX_COUNT] = {mux1_channels, mux2_channels};
+
+
 // ========================================
 // HELPER FUNCTIONS
 // ========================================
@@ -80,8 +84,8 @@ void hallscan_calibrate(void) {
     bool debug_this_scan = (timer_elapsed32(last_debug_time) >= 1000);
     if (debug_this_scan) last_debug_time = now;
 
-    pin_t adc_pins[MUX_COUNT] = {MUX1_ADC_PIN, MUX2_ADC_PIN};
-    const mux16_ref_t* mux_tables[MUX_COUNT] = {mux1_channels, mux2_channels};
+    // pin_t adc_pins[MUX_COUNT] = {MUX1_ADC_PIN, MUX2_ADC_PIN};
+    // const mux16_ref_t* mux_tables[MUX_COUNT] = {mux1_channels, mux2_channels};
 
     // initialize arrays with safe defaults
     for (int i = 0; i < SENSOR_COUNT; ++i) {
@@ -148,7 +152,7 @@ void matrix_init_custom(void) {
     // Setup LED transistor control pin (if defined per-board)
 #ifdef HALLSCAN_LED_PIN
     gpio_set_pin_output(HALLSCAN_LED_PIN);
-    gpio_write(HALLSCAN_LED_PIN, 0);
+    gpio_write_pin(HALLSCAN_LED_PIN, 0);
     led_state = false;
 #endif
 
@@ -180,8 +184,8 @@ void matrix_init_custom(void) {
 void led__transistor_set(bool on) {
     // If pin not configured, no-op
 #ifdef HALLSCAN_LED_PIN
-    setPinOutput(HALLSCAN_LED_PIN);
-    writePin(HALLSCAN_LED_PIN, on ? 1 : 0);
+    gpio_set_pin_output(HALLSCAN_LED_PIN);
+    gpio_write_pin(HALLSCAN_LED_PIN, on ? 1 : 0);
     led_state = on;
 #endif
 }
@@ -217,8 +221,8 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 
 
     // Array of ADC pins and MUX tables
-    pin_t adc_pins[MUX_COUNT] = {MUX1_ADC_PIN, MUX2_ADC_PIN};
-    const mux16_ref_t* mux_tables[MUX_COUNT] = {mux1_channels, mux2_channels};
+    // pin_t adc_pins[MUX_COUNT] = {MUX1_ADC_PIN, MUX2_ADC_PIN};
+    // const mux16_ref_t* mux_tables[MUX_COUNT] = {mux1_channels, mux2_channels};
 
     // Scan all the MUXes
     for (uint8_t mux_idx = 0; mux_idx < MUX_COUNT; mux_idx++) {

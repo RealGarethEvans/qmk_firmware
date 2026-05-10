@@ -4,8 +4,6 @@
 #include <stdint.h>
 #include "quantum.h"
 
-#define RIGHT_TEST // This is just for testing the hardware
-
 // ========================================
 // PIN ASSIGNMENTS - Change these for your board
 // ========================================
@@ -19,8 +17,6 @@
 // ADC pins for each MUX (RP2040 internal ADC)
 #define MUX1_ADC_PIN GP28  // ADC2 outside
 #define MUX2_ADC_PIN GP27  // ADC1
-// #define MUX1_ADC_PIN GP26  // ADC0
-// #define MUX4_ADC_PIN GP29  // ADC3
 #define MUX_COUNT 2
 
 // LED transistor pin used to cut power to RGB LEDs.
@@ -34,15 +30,12 @@
 // ========================================
 
 // SENSOR SETTINGS
+
 // Output all sensor readings every scan
 // #define verbose_debug
 
 // Define whether a press causes an increase or decrease in ADC value.
 #define SENSOR_POSITIVE
-
-// On an rp2040, you can't get debug information out until USB is initialized, which happens after matrix init.
-// Set this flag to delay calibration until the first scan, so you can see debug prints from calibration.
-#define DELAY_CALIBRATION
 
 // SENSOR_THRESHOLD is interpreted as a percent when calibration is enabled.
 // e.g. SENSOR_THRESHOLD == 10 means a drop of 10% from baseline indicates a press.

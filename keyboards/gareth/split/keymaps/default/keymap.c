@@ -1,6 +1,6 @@
 // Copyright 2023 QMK
 // SPDX-License-Identifier: GPL-2.0-or-later
-
+#include "print.h"
 #include QMK_KEYBOARD_H
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -42,6 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // )
 };
 
+
 void keyboard_pre_init_user(void) {
     // Customise these values to desired behaviour
     debug_enable=true;
@@ -50,6 +51,7 @@ void keyboard_pre_init_user(void) {
     //debug_mouse=true;
     print("Debugging enabled\n");
 }
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // If console is enabled, it will print the matrix position and status of each key pressed
@@ -61,4 +63,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     #endif
     return true;
 }
-
