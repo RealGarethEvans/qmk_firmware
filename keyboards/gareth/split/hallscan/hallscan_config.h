@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include "quantum.h"
 
+// #define RIGHT_HAND_SIDE
+
 // ========================================
 // PIN ASSIGNMENTS - Change these for your board
 // ========================================
@@ -32,14 +34,14 @@
 // SENSOR SETTINGS
 
 // Output all sensor readings every scan
-// #define verbose_debug
+// #define VERBOSE_DEBUG
 
 // Define whether a press causes an increase or decrease in ADC value.
 #define SENSOR_POSITIVE
 
 // SENSOR_THRESHOLD is interpreted as a percent when calibration is enabled.
 // e.g. SENSOR_THRESHOLD == 10 means a drop of 10% from baseline indicates a press.
-#ifdef RIGHT_TEST
+#ifdef RIGHT_HAND_SIDE
 #define SENSOR_THRESHOLD 10
 #else
 #define SENSOR_THRESHOLD 5
@@ -58,7 +60,7 @@
 
 
 // Number of keys to track (should match your matrix size)
-#define MAX_KEYS 18
+#define MAX_KEYS 36
 
 // ========================================
 // SENSOR DEFINITIONS
@@ -67,7 +69,7 @@
 // Sensor enum - These are the logical key names
 // Note: Using 1-based numbering to match shego75 approach
 // S_ESC = 1 means first sensor, maps to matrix position (0,0)
-#ifdef RIGHT_TEST
+#ifdef RIGHT_HAND_SIDE
 typedef enum sensor_names {
     S_J= 1,  S_L,   S_U,     S_Y,  S_APOS,
     S_H,     S_N,   S_E,     S_I,  S_O,

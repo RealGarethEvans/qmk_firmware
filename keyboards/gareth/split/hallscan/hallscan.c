@@ -20,7 +20,7 @@ static uint32_t last_debug_time = 0;
 static bool led_state = false;
 
 // Sensor name strings for debug output
-#ifdef RIGHT_TEST
+#ifdef RIGHT_HAND_SIDE
 static const char *sensor_names[SENSOR_COUNT] = {
     "J",    "L",   "U",    "Y",   "APOS",
     "H",    "N",   "E",    "I",   "O",
@@ -202,7 +202,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
     bool changed = false;
     uint32_t now = timer_read32();
 
-    #ifdef verbose_debug
+    #ifdef VERBOSE_DEBUG
     bool debug_this_scan = (timer_elapsed32(last_debug_time) >= 1000);
     if (debug_this_scan) last_debug_time = now;
     if (debug_this_scan) {
@@ -270,7 +270,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
             bool should_press = (adc_val < thr);
             #endif
 
-            #ifdef verbose_debug
+            #ifdef VERBOSE_DEBUG
             if (debug_this_scan) {
                 // printf("%d:%d b%d t%d ", key_idx, adc_val, sensor_baseline[key_idx], thr);
                 // printf("%d:%d ", ch, adc_val);
@@ -298,13 +298,13 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
                 current_matrix[matrix_row] |= (1 << matrix_col);
             }
         }
-        #ifdef verbose_debug
+        #ifdef VERBOSE_DEBUG
         if (debug_this_scan) {
             print("\n");
         }
         #endif
     }
-    #ifdef verbose_debug
+    #ifdef VERBOSE_DEBUG
     if (debug_this_scan) {
         print("\n");
     }

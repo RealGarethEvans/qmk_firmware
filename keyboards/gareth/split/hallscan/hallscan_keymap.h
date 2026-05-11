@@ -9,7 +9,7 @@
 // Each mux16_ref_t array maps 16 MUX channels (0-15) to sensor IDs
 // Use 0 for unmapped channels
 
-#ifdef RIGHT_TEST
+#ifdef RIGHT_HAND_SIDE
 // MUX 1 - Connected to MUX1_ADC_PIN
 const mux16_ref_t mux1_channels[16] = {
 	[0]  = { 0 },
