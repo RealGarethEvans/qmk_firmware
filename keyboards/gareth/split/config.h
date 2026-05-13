@@ -7,7 +7,7 @@
 // #define HALLSCAN_LED_PIN GP13
 
 #define MATRIX_COLS  5
-#define MATRIX_ROWS  10
+#define MATRIX_ROWS  8
 
 #define SERIAL_USART_FULL_DUPLEX
 #define SERIAL_USART_TX_PIN GP16

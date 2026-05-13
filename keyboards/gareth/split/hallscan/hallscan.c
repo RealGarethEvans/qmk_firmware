@@ -20,21 +20,13 @@ static uint32_t last_debug_time = 0;
 static bool led_state = false;
 
 // Sensor name strings for debug output
-#ifdef RIGHT_HAND_SIDE
+#
 static const char *sensor_names[SENSOR_COUNT] = {
-    "J",    "L",   "U",    "Y",   "APOS",
-    "H",    "N",   "E",    "I",   "O",
-    "K",    "M",   "COMM", "DOT", "SLASH",
-    "BSPC", "ENT", "DEL",
+    "Q/J",   "W/L",   "E/U",    "R/Y",   "T/'",
+    "A/H",   "S/N",   "D/E",    "F/I",   "G/O",
+    "Z/K",   "X/M",   "C/,",    "V/.",   "B//",
+                "Esc/BSp", "Sp/Ent", "Tab/Del",
 };
-#else
-static const char *sensor_names[SENSOR_COUNT] = {
-    "Q",   "W",   "E",    "R",   "T",
-    "A",   "S",   "D",    "F",   "G",
-    "Z",   "X",   "C",    "V",   "B",
-                "Esc", "Spc1", "Tab",
-};
-#endif
 
 // ========================================
 // MUX CHANNEL MAPPINGS
@@ -49,7 +41,7 @@ uint16_t sensor_baseline[SENSOR_COUNT];
 uint16_t sensor_thresholds[SENSOR_COUNT];
 
 pin_t adc_pins[MUX_COUNT] = {MUX1_ADC_PIN, MUX2_ADC_PIN};
-const mux16_ref_t* mux_tables[MUX_COUNT] = {mux1_channels, mux2_channels};
+mux16_ref_t* mux_tables[MUX_COUNT];
 
 
 // ========================================
@@ -84,9 +76,6 @@ void hallscan_calibrate(void) {
     bool debug_this_scan = (timer_elapsed32(last_debug_time) >= 1000);
     if (debug_this_scan) last_debug_time = now;
 
-    // pin_t adc_pins[MUX_COUNT] = {MUX1_ADC_PIN, MUX2_ADC_PIN};
-    // const mux16_ref_t* mux_tables[MUX_COUNT] = {mux1_channels, mux2_channels};
-
     // initialize arrays with safe defaults
     for (int i = 0; i < SENSOR_COUNT; ++i) {
         sensor_baseline[i] = 0;
@@ -114,12 +103,23 @@ void hallscan_calibrate(void) {
             sensor_baseline[sidx] = sample;
 
             // compute threshold as percentage below baseline
+            uint32_t threshold_pct;
+            if (is_keyboard_left()) {
+                threshold_pct = SENSOR_THRESHOLD;
+            } else {
+                #ifdef RIGHT_SENSOR_THRESHOLD
+                threshold_pct = RIGHT_SENSOR_THRESHOLD;
+                #else
+                threshold_pct = SENSOR_THRESHOLD;
+                #endif
+            }
+
             uint32_t thr;
             #ifdef SENSOR_POSITIVE
-            thr = ((uint32_t)sensor_baseline[sidx] * (100 + (uint32_t)SENSOR_THRESHOLD)) / 100;
+            thr = ((uint32_t)sensor_baseline[sidx] * (100 + (uint32_t)threshold_pct)) / 100;
             if (thr > 0xFFFF) thr = 0xFFFF;
             #else
-            thr = ((uint32_t)sensor_baseline[sidx] * (100 - (uint32_t)SENSOR_THRESHOLD)) / 100;
+            thr = ((uint32_t)sensor_baseline[sidx] * (100 - (uint32_t)threshold_pct)) / 100;
             if (thr > 0xFFFF) thr = 0xFFFF;
             #endif
             sensor_thresholds[sidx] = (uint16_t)thr;
@@ -144,6 +144,15 @@ uint16_t hallscan_get_threshold(sensor_id_t id) {
 }
 
 void matrix_init_custom(void) {
+    // Initialize MUX channel mapping tables
+    if(is_keyboard_left()) {
+        mux_tables[0] = left_mux1_channels;
+        mux_tables[1] = left_mux2_channels;
+    } else {
+        mux_tables[0] = right_mux1_channels;
+        mux_tables[1] = right_mux2_channels;
+    }
+
     // Setup MUX control pins
     gpio_set_pin_output(MUX_S0_PIN);
     gpio_set_pin_output(MUX_S1_PIN);
@@ -219,11 +228,6 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
         current_matrix[row] = 0;
     }
 
-
-    // Array of ADC pins and MUX tables
-    // pin_t adc_pins[MUX_COUNT] = {MUX1_ADC_PIN, MUX2_ADC_PIN};
-    // const mux16_ref_t* mux_tables[MUX_COUNT] = {mux1_channels, mux2_channels};
-
     // Scan all the MUXes
     for (uint8_t mux_idx = 0; mux_idx < MUX_COUNT; mux_idx++) {
         // Scan all 16 channels on this MUX
@@ -272,10 +276,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 
             #ifdef VERBOSE_DEBUG
             if (debug_this_scan) {
-                // printf("%d:%d b%d t%d ", key_idx, adc_val, sensor_baseline[key_idx], thr);
-                // printf("%d:%d ", ch, adc_val);
                 printf("%d:%d/%d ", ch, adc_val, thr);
-                // print("hello again\n");
             }
             #endif
 

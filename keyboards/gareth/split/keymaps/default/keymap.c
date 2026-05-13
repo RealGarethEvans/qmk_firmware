@@ -18,7 +18,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *               └───┤   │   │   ├───┘
       *                   └───┘   └───┘
       */
-    // OK, RIGHT_HAND_SIDE isn't getting read, presumably because this file is being compiled before hallscan_config.h? But I want to be able to test the right half without needing to change the keymap, so I'll just define it here for now. --- IGNORE ---
     [0] = LAYOUT(
         KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,        KC_J,    KC_L,    KC_U,    KC_Y,    KC_QUOT,
         KC_A,    KC_R,    KC_S,    KC_T,    KC_D,        KC_H,    KC_N,    KC_E,    KC_I,    KC_O,
@@ -53,7 +52,6 @@ void keyboard_pre_init_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // If console is enabled, it will print the matrix position and status of each key pressed
     #ifdef CONSOLE_ENABLE
-    // uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
     uprintf("kc: %s\n", get_keycode_string(keycode));
     print("key pressed\n");
 

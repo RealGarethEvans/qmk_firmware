@@ -9,87 +9,85 @@
 // Each mux16_ref_t array maps 16 MUX channels (0-15) to sensor IDs
 // Use 0 for unmapped channels
 
-#ifdef RIGHT_HAND_SIDE
 // MUX 1 - Connected to MUX1_ADC_PIN
-const mux16_ref_t mux1_channels[16] = {
+mux16_ref_t right_mux1_channels[16] = {
 	[0]  = { 0 },
 	[1]  = { 0 },
 	[2]  = { 0 },
-	[3]  = { S_COMM },
-	[4]  = { S_E },
-	[5]  = { S_U },
+	[3]  = { S_C_COMM },
+	[4]  = { S_S_E },
+	[5]  = { S_F_U },
 	[6]  = { 0 },
 	[7]  = { 0 },
-	[8]  = { S_Y },
-	[9]  = { S_APOS },
-	[10] = { S_O },
+	[8]  = { S_P_Y },
+	[9]  = { S_G_APOS },
+	[10] = { S_D_O },
 	[11] = { 0 },
 	[12] = { 0 },
-	[13] = { S_SLASH },
-	[14] = { S_I },
-	[15] = { S_DOT },
+	[13] = { S_B_SLASH },
+	[14] = { S_T_I },
+	[15] = { S_V_DOT },
 };
 
 // MUX 2 - Connected to MUX2_ADC_PIN
-const mux16_ref_t mux2_channels[16] = {
+mux16_ref_t right_mux2_channels[16] = {
 	[0]  = { 0 },
 	[1]  = { 0 },
 	[2]  = { 0 },
-	[3]  = { S_H },
-	[4]  = { S_J },
-	[5]  = { S_K },
+	[3]  = { S_A_H },
+	[4]  = { S_Q_J },
+	[5]  = { S_Z_K },
 	[6]  = { 0 },
 	[7]  = { 0 },
-	[8]  = { S_L },
-	[9]  = { S_N },
-	[10] = { S_M },
+	[8]  = { S_W_L },
+	[9]  = { S_R_N },
+	[10] = { S_X_M },
 	[11] = { 0 },
 	[12] = { 0 },
-	[13] = { S_BSPC },
-	[14] = { S_ENT },
-	[15] = { S_DEL },
+	[13] = { S_ESC_BSPC },
+	[14] = { S_SPC_ENT },
+	[15] = { S_TAB_DEL },
 };
-#else
+
 // MUX 1 - Connected to MUX1_ADC_PIN
-const mux16_ref_t mux1_channels[16] = {
-	[0]  = { S_X },
-	[1]  = { S_R },
-	[2]  = { S_W },
+mux16_ref_t left_mux1_channels[16] = {
+	[0]  = { S_X_M },
+	[1]  = { S_R_N },
+	[2]  = { S_W_L },
 	[3]  = { 0 },
 	[4]  = { 0 },
-	[5]  = { S_Z },
-	[6]  = { S_A },
-	[7]  = { S_Q },
+	[5]  = { S_Z_K },
+	[6]  = { S_A_H },
+	[7]  = { S_Q_J },
 	[8]  = { 0 },
 	[9]  = { 0 },
-	[10] = { S_F },
-	[11] = { S_S },
-	[12] = { S_C },
+	[10] = { S_F_U },
+	[11] = { S_S_E },
+	[12] = { S_C_COMM },
 	[13] = { 0 },
 	[14] = { 0 },
 	[15] = { 0 },
 };
 
 // MUX 2 - Connected to MUX2_ADC_PIN
-const mux16_ref_t mux2_channels[16] = {
-	[0]  = { S_TAB },
-	[1]  = { S_SPC },
-	[2]  = { S_ESC },
+mux16_ref_t left_mux2_channels[16] = {
+	[0]  = { S_TAB_DEL },
+	[1]  = { S_SPC_ENT },
+	[2]  = { S_ESC_BSPC },
 	[3]  = { 0 },
 	[4]  = { 0 },
-	[5]  = { S_V },
-	[6]  = { S_T },
-	[7]  = { S_P },
+	[5]  = { S_V_DOT },
+	[6]  = { S_T_I },
+	[7]  = { S_P_Y },
 	[8]  = { 0 },
 	[9]  = { 0 },
-	[10] = { S_B },
-	[11] = { S_D },
-	[12] = { S_G },
+	[10] = { S_B_SLASH },
+	[11] = { S_D_O },
+	[12] = { S_G_APOS },
 	[13] = { 0 },
 	[14] = { 0 },
 	[15] = { 0 },
 };
-#endif
 
 // // MUX 3 - Connected to MUX3_ADC_PIN
 // const mux16_ref_t mux3_channels[16] = {
