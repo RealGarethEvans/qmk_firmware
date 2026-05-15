@@ -45,7 +45,7 @@
 // e.g. SENSOR_THRESHOLD == 10 means a drop of 10% from baseline indicates a press.
 #define SENSOR_THRESHOLD 5
 // Only define RIGHT_SENSOR_THRESHOLD if you want a different threshold for the right hand sensors. Otherwise, SENSOR_THRESHOLD for both sides
-#define RIGHT_SENSOR_THRESHOLD 10
+#define RIGHT_SENSOR_THRESHOLD 5
 
 // Debounce time in milliseconds
 #define DEBOUNCE_MS 50

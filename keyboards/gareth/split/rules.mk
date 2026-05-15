@@ -4,3 +4,7 @@ SRC += hallscan/hallscan.c
 
 CONSOLE_ENABLE = yes
 KEYBOARD_STRING_ENABLE = yes
+TAP_DANCE_ENABLE = yes
+UNICODE_ENABLE = yes
+CAPS_WORD_ENABLE = yes
+# KEY_OVERRIDE_ENABLE = yes
