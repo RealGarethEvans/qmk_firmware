@@ -9,14 +9,14 @@
 
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 #define LEFT_TOP_ROW        TD(TD_REBOOT),  TD(TD_QWERTY), MS_UP,   _______, KC_VOLU
-#define LEFT_MIDDLE_ROW            KC_NUM,      MS_LEFT, MS_DOWN, MS_RGHT, KC_VOLD
-#define LEFT_BOTTOM_ROW           _______,      _______, _______, _______, KC_MUTE
-#define LEFT_THUMBS                                      _______, _______, _______
+#define LEFT_MIDDLE_ROW            KC_NUM,        MS_LEFT, MS_DOWN, MS_RGHT, KC_VOLD
+#define LEFT_BOTTOM_ROW           _______,        _______, _______, _______, KC_MUTE
+#define LEFT_THUMBS                                        _______, _______, _______
 
-#define RIGHT_TOP_ROW       KC_VOLU, _______,   MS_UP, TG(_QWERTY), TD(TD_REBOOT)
-#define RIGHT_MIDDLE_ROW    KC_VOLD, MS_LEFT, MS_DOWN,     MS_RGHT,       G_JIGGLE
-#define RIGHT_BOTTOM_ROW    KC_MUTE, _______, _______,     _______,       _______
-#define RIGHT_THUMBS        _______, _______, _______
+#define RIGHT_TOP_ROW       KC_VOLU ,_______ ,MS_UP   ,TG(_QWERTY) ,TD(TD_REBOOT)
+#define RIGHT_MIDDLE_ROW    KC_VOLD ,MS_LEFT ,MS_DOWN ,MS_RGHT     ,TD(TD_JIGGLE)
+#define RIGHT_BOTTOM_ROW    KC_MUTE ,_______ ,_______ ,_______     ,_______
+#define RIGHT_THUMBS        _______ ,_______ ,_______
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT(
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SYMBOLS] = LAYOUT_wrapper(
               KC_LCBR, KC_AMPR, KC_ASTR,    KC_LPRN,   KC_RCBR,       RIGHT_TOP_ROW,
-              G_DEGREES,  KC_DLR, KC_PERC,    KC_CIRC,   KC_PLUS,       RIGHT_MIDDLE_ROW,
+            G_DEGREES,  KC_DLR, KC_PERC,    KC_CIRC,   KC_PLUS,       RIGHT_MIDDLE_ROW,
         KC_NONUS_HASH, KC_EXLM,   KC_AT, LSFT(KC_3),   KC_PIPE,       RIGHT_BOTTOM_ROW,
                                 KC_LPRN,    KC_RPRN, G_EM_DASH,       RIGHT_THUMBS
     ),

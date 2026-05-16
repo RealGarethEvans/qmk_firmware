@@ -11,15 +11,17 @@ enum custom_keycodes {
     G_EM_DASH = SAFE_RANGE,
     G_DEGREES,
     G_SEL_LN,
-    G_JIGGLE,
 };
 
 // Tap Dance declarations
 enum {
     TD_CAPS,
     TD_REBOOT,
-    TD_QWERTY
+    TD_QWERTY,
+    TD_JIGGLE
 };
+
+bool mouse_jiggle_mode = false;
 
 void dance_caps(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -52,10 +54,29 @@ void dance_qwerty(tap_dance_state_t *state, void *user_data) {
     }
 };
 
+deferred_token jiggle_token;
+uint32_t jiggle_callback(uint32_t trigger_time, void *cb_arg){
+    static bool positive = true;
+    if (mouse_jiggle_mode) {
+        report_mouse_t mouse_report = {
+            .x = positive ? 2 : -2,
+            .y = positive ? 2 : -2,
+        };
+        host_mouse_send(&mouse_report);
+        positive = !positive;
+    }
+    return JIGGLER_INTERVAL;
+}
+
 void dance_jiggle(tap_dance_state_t *state, void *user_data) {
-    if (state->count == 2) {
-        // Double tap: Toggle mouse jiggle mode
-        mouse_jiggle_mode = !mouse_jiggle_mode
+    if(state->count == 1) {
+        print("Disabling mouse jiggle mode\n");
+        cancel_deferred_exec(jiggle_token);
+        mouse_jiggle_mode = false;
+    } else if (state->count == 2) {
+        print("Enabling mouse jiggle mode\n");
+        jiggle_token = defer_exec(500, jiggle_callback, NULL);
+        mouse_jiggle_mode = true;
     }
 };
 
@@ -64,6 +85,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_REBOOT] = ACTION_TAP_DANCE_FN(dance_reboot),
     [TD_CAPS] = ACTION_TAP_DANCE_FN(dance_caps),
     [TD_QWERTY] = ACTION_TAP_DANCE_FN(dance_qwerty),
+    [TD_JIGGLE] = ACTION_TAP_DANCE_FN(dance_jiggle)
 };
 
 
@@ -76,8 +98,6 @@ void keyboard_pre_init_user(void) {
     //debug_mouse=true;
     print("Debugging enabled\n");
 }
-
-bool mouse_jiggle_mode = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // If console is enabled, it will print the matrix position and status of each key pressed

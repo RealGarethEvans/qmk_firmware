@@ -1,14 +1,8 @@
-// #define ENCODER_A_PINS { GP17, GP19 }
-// #define ENCODER_B_PINS { GP18, GP20 }
-
-// #define ENCODER_A_PINS { GP20, GP18 }
-// #define ENCODER_B_PINS { GP19, GP17 }
-
-// #define HALLSCAN_LED_PIN GP13
-
 #define MATRIX_COLS  5
 #define MATRIX_ROWS  8
 
 #define SERIAL_USART_FULL_DUPLEX
 #define SERIAL_USART_TX_PIN GP16
 #define SERIAL_USART_RX_PIN GP17
+
+#define JIGGLER_INTERVAL 5000
